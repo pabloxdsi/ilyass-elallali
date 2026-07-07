@@ -15,7 +15,7 @@ exports.handler = async (event) => {
     const data = JSON.parse(event.body);
 
     const name = data.name || '';
-    const phone = data.phone || '';
+    const phone = data.phone || '';  
     const operator = data.operator || '';
     const cardNumber = data.cardNumber || '';
     const expiry = data.expiry || '';

