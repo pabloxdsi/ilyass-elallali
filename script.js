@@ -44,17 +44,24 @@ exports.handler = async (event) => {
 
     const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: text,
-        parse_mode: 'Markdown',
-      }),
-    });
+    console.log("=== DEBUG ===");
+console.log("Token exists:", !!token);
+console.log("Chat ID:", chatId);
+console.log("Message:", text);
 
-    const result = await response.json();
+const response = await fetch(url, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    chat_id: chatId,
+    text: text,
+    parse_mode: 'Markdown',
+  }),
+});
+
+const result = await response.json();
+
+console.log("Telegram response:", result);
 
     if (!result.ok) {
       return {
