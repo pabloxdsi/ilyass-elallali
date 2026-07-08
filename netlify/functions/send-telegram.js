@@ -1,5 +1,3 @@
-// netlify/functions/send-telegram.js
-
 exports.handler = async (event) => {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -77,7 +75,7 @@ console.log("Telegram response:", result);
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ success: false, error: error.message }),
+      body: JSON.stringify({ success: false, error: error.message } ),
     };
   }
 
